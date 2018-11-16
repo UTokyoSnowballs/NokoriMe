@@ -1,4 +1,4 @@
-# NokoriMe
+# NokoriMe (https://nokori-me.azurewebsites.net/)
 Credit to Lys Egholm Andersen, Zilu Liang
 
 This app was developed based on SleepBeta (https://sleepbeta.azurewebsites.net) for a capstone project in the course "Web Development in Cloud" (https://snowballsutokyo.wordpress.com) in 2017 Fall.
