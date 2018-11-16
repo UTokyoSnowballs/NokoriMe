@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "DataAnalysis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="jumbotron">
+    <h1>Fitbit</h1>
+    <!--p class="lead">SleepMakeSense helps you identify personal sleep affecting factors.</p-->
+
+    <p><a href="/Fitbit/Analysis" class="btn btn-default">Analysis Sleep Affecting Factors&raquo;</a></p>
+    <p><a href="/Fitbit/Export" class="btn btn-default">Export Data &raquo;</a></p>
+    @Html.ActionLink("ViewData", "Index", "Sleeps")
+</div>
+
+
+
+

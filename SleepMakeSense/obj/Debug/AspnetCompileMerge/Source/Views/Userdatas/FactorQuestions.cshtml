@@ -1,0 +1,500 @@
+﻿@using SleepMakeSense.Models
+
+@model UserQuestion
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Factor List</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+</head>
+
+<body  onload="UserdatasController.html()">
+    <div id="DataProcessing">
+        <script type="text/javascript">
+
+            //need unique names for each drop down.
+            function myFunc() {
+                
+            }
+
+            function account() {
+                var string = "<td>Watch TV</td><td>How many hours did you watch TV after 6pm last night?</td>";
+                document.getElementById("tv").innerHTML = string;
+
+                return string;
+            }
+
+        </script>
+    </div>
+    <div class="container">
+        <div style="color:#3376bf">
+            <h2><b>Potential Sleep Impacting Factors</b></h2>
+        </div>
+            <p>This list is created according to evidence-based sleep research literature.Why not exploring whether these factors actually impact your sleep? </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Factors</th>
+                        <th>Questions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Question1 == true)
+                    {
+                        <tr>
+                                <td>Watch TV</td>
+                                <td>How many hours did you watch TV after 6pm last night?</td>
+                                <td>
+                                    <select id="ddlViewByTV">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                                </tr>
+
+                    }
+                            @if (Model.Question2 == true)
+                            {
+                                <tr>
+                                    <td>Drink Caffiene</td>
+                                    <td>How many coffees and/or energy drinks did you drink yesterday?</td>
+                                    <td>
+                                        <select id="ddlViewByCaffiene">
+                                            <option value="0" selected="selected">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            }
+                      
+                        @if (Model.Question3 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>When did you have caffiene? (energy drink, coffee, etc.)</td>
+                                <td>
+                                    <select id="ddlViewByCaffiene2">
+                                        <option value="0" selected="selected">No Coffee</option>
+                                        <option value="1">6AM</option>
+                                        <option value="2">7AM</option>
+                                        <option value="3">8AM</option>
+                                        <option value="4">9AM</option>
+                                        <option value="5">10AM</option>
+                                        <option value="6">11AM</option>
+                                        <option value="7">12PM</option>
+                                        <option value="8">1PM</option>
+                                        <option value="9">2PM</option>
+                                        <option value="10">3PM</option>
+                                        <option value="11">4PM</option>
+                                        <option value="12">5PM</option>
+                                        <option value="13">6PM</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question4 == true)
+                        {
+                            <tr>
+                                <td>Exercise Often</td>
+                                <td>How many hours did you exercise yesterday?</td>
+                                <td>
+                                    <select id="ddlViewByExercise">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question5 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>How intense did you work out on a scale of 1-10 (1 being easy workout, 10 being your body was in a lot of pain afterwards)</td>
+                                <td>
+                                    <select id="ddlViewByExercise2">
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question6 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>What type of exercise did you do? (e.g. football, basketball, yoga, jogging, swimming)</td>
+                                <td>
+                                    <select id="ddlViewByExercise3">
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="1">Running</option>
+                                        <option value="2">Swimming</option>
+                                        <option value="3">Jogging</option>
+                                        <option value="4">Gym</option>
+                                        <option value="5">Yoga</option>
+                                        <option value="6">Gymnastics</option>
+                                        <option value="7">Rugby</option>
+                                        <option value="8">Soccer</option>
+                                        <option value="9">AFL</option>
+                                        <option value="10">Other</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question7 == true)
+                        {
+                            <tr>
+                                <td>Late Night Snacking</td>
+                                <td>How many hours before bed did you snack last night?</td>
+                                <td>
+                                    <select id="ddlViewBySnack">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question8 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>What types of food did you snack on?</td>
+                                <td>
+                                    <select id="ddlViewBySnack2">
+                                        <option value="1" selected="selected">Healthy Food</option>
+                                        <option value="2">Unhealthy Food</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question9 == true)
+                        {
+                            <tr>
+                                <td>Take Naps</td>
+                                <td>How long did you nap for yesterday?</td>
+                                <td>
+                                    <select id="ddlViewByNap">
+                                        <option value="0" selected="selected">0 - 10 minutes</option>
+                                        <option value="1">11 - 20 minutes</option>
+                                        <option value="2">21 - 30 minutes</option>
+                                        <option value="3">31 - 40 minutes</option>
+                                        <option value="4">41 - 50 minutes</option>
+                                        <option value="5">51 - 60 minutes</option>
+                                        <option value="6">61 - 70 minutes</option>
+                                        <option value="7">71 - 80 minutes</option>
+                                        <option value="8">81 - 90 minutes</option>
+                                        <option value="9">91 - 100 minutes</option>
+                                        <option value="10">101+ minutes</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question10 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>Was your nap before 12pm or after?</td>
+                                <td>
+                                    <select id="ddlViewByNap2">
+                                        <option value="0" selected="selected">Before 12PM</option>
+                                        <option value="1">After 12PM</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question11 == true)
+                        {
+                            <tr>
+                                <td>Drink Alcohol</td>
+                                <td>How many drinks did you have yesterday?</td>
+                                <td>
+                                    <select id="ddlViewByAlcohol">
+                                        <option value="0" selected="selected">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question12 == true)
+                        {
+                            <tr>
+                                <td>Part Time Job</td>
+                                <td>When did your shift start last night?</td>
+                                <td>
+                                    <select id="ddlViewByJob">
+                                        <option value="0" selected="selected">No Shift</option>
+                                        <option value="1">Before 6PM</option>
+                                        <option value="2">7PM</option>
+                                        <option value="3">8PM</option>
+                                        <option value="4">9PM</option>
+                                        <option value="5">10PM</option>
+                                        <option value="6">11PM</option>
+                                        <option value="7">12AM</option>
+                                        <option value="8">1AM</option>
+                                        <option value="9">2AM</option>
+                                        <option value="10">3AM</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question13 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>How many hours did you work for?</td>
+                                <td>
+                                    <select id="ddlViewByJob2">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question14 == true)
+                        {
+                            <tr>
+                                <td>Texting/Using Your Phone Before Bed</td>
+                                <td>How many hours did you spend on your phone after 6pm yesterday?</td>
+                                <td>
+                                    <select id="ddlViewByPhone">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question15 == true)
+                        {
+                            <tr>
+                                <td>Write A Diary/Journal</td>
+                                <td>Did you write in your diary before bed last night?</td>
+                                <td>
+                                    <select id="ddlViewByDiary">
+                                        <option value="0" selected="selected">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question16 == true)
+                        {
+                            <tr>
+                                <td>Listen To Music Before Bed</td>
+                                <td>How long did you listen to music to before sleeping last night?</td>
+                                <td>
+                                    <select id="ddlViewByMusic">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question17 == true)
+                        {
+                            <tr>
+                                <td> </td>
+                                <td>What genre of music did you listen to?</td>
+                                <td>
+                                    <select id="ddlViewByMusic2">
+                                        <option value="0" selected="selected">Didn't listen to music</option>
+                                        <option value="1">Electronic</option>
+                                        <option value="2">Hip Hop</option>
+                                        <option value="3">Rock</option>
+                                        <option value="4">Pop</option>
+                                        <option value="5">Jazz</option>
+                                        <option value="6">Easy Listening</option>
+                                        <option value="7">Blues</option>
+                                        <option value="8">Other</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question18 == true)
+                        {
+                            <tr>
+                                <td>Use Social Media</td>
+                                <td>How long were you on social media for after 6pm last night?</td>
+                                <td>
+                                    <select id="ddlViewBySocial">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question19 == true)
+                        {
+                            <tr>
+                                <td>Play Video Games</td>
+                                <td>How long did you play video games for after 6pm?</td>
+                                <td>
+                                    <select id="ddlViewByGames">
+                                        <option value="0" selected="selected">0 hours</option>
+                                        <option value="1">1 hour</option>
+                                        <option value="2">2 hours</option>
+                                        <option value="3">3 hours</option>
+                                        <option value="4">4 hours</option>
+                                        <option value="5">5 hours</option>
+                                        <option value="6">6 hours</option>
+                                        <option value="7">7 hours</option>
+                                        <option value="8">8 hours</option>
+                                        <option value="9">9 hours</option>
+                                        <option value="10">10 hours</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.Question20 == true)
+                        {
+                            <tr>
+                                <td>Upcoming Examination</td>
+                                <td>How long did you play video games for after 6pm?</td>
+                                <td>
+                                    <select id="ddlViewByExam">
+                                        <option value="0" selected="selected">No</option>
+                                        <option value="1">Yes</option>
+
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                
+                <tr>
+                    <td> </td>
+                    <td>How stressed about your exams / assignments (1 not at all - 10 a lot)</td>
+                    <td>
+                        <select id="ddlViewByExam2">
+                            <option value="0" selected="selected">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </td>
+                </tr>
+                        <tr>
+                            <td>Anxious/Stressed</td>
+                            <td>How anxious/stressed were you yesterday? (1 not at all - 10 a lot)</td>
+                            <td>
+                                <select id="ddlViewByStress">
+                                    <option value="0" selected="selected">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </td>
+                        </tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="button" onclick="account()" value="Submit"></td>
+</tbody>
+            </table>
+
+        </div>
+</body>
+</html>

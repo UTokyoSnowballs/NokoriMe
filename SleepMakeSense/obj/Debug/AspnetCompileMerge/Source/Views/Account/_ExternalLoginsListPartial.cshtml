@@ -1,0 +1,28 @@
+﻿@model SleepMakeSense.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+<h4>Please log in using another service.</h4>
+<hr />
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Count() == 0) {
+        <div>
+            <p>
+                There is no pre-configured external authentication service . Of how to set this ASP.NET application to support login via external service
+                For more information , please visit the <a href="http://go.microsoft.com/fwlink/?LinkId=403804"> this article </a>.
+            </p>
+        </div>
+    }
+    else {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList">
+                <p>
+                    @foreach (AuthenticationDescription p in loginProviders) {
+                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@p.Caption Log in using the account ">@p.AuthenticationType</button>
+                    }
+                </p>
+            </div>
+        }
+    }
+}

@@ -1,0 +1,569 @@
+﻿@using SleepMakeSense.Models
+@*@model List<Userdata>*@
+@*@model List<CorrList>*@
+
+@model MyViewModel
+
+
+@using System.Web.Script.Serialization
+
+
+@{
+
+    //ViewBag.Title = "Sync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    @*<meta name="viewport" content="width=device-width" /> // porque no??*@
+    <title>Sync</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+    <style type="text/css">
+        .axis path, .axis line {
+            fill: none;
+            stroke: #bdbdbd;
+            shape-rendering: crispEdges;
+            font-size: x-small;
+        }
+
+        [class*="col-"] {
+            background-clip: padding-box;
+            /*border: 10px solid transparent;*/
+            border: 2px solid;
+            border-color: #bdbdbd;
+        }
+
+        div.tooltip {
+            position: absolute;
+            text-align: center;
+            width: 160px;
+            height: 36px;
+            padding: 2px;
+            font: 12px sans-serif;
+            color: white;
+            background: black;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="DataProcessing">
+        <script type="text/javascript">
+
+            var cMinutesAsleep = [];
+            var cMinutesAwake = [];
+            var cAwakeningsCount = [];
+            var cMinutesToFallAsleep = [];
+            var cSleepEfficiency = [];
+
+            var MinutesAsleep = [];
+            var MinutesAwake = [];
+            var AwakeningsCount = [];
+            var MinutesToFallAsleep = [];
+            var SleepEfficiency = [];
+
+
+            @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+            {
+
+                if (@d.Belong == "MinutesAsleep") {
+                    @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                    } else if (@d.Belong == "MinutesAwake"){
+                                            //要取反
+                                            var temp = 0 - d.Coefficient;
+                    @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@temp" });
+                                                    } else if (@d.Belong == "AwakeningsCount"){
+                                            //要取反
+                                            var temp = 0 - d.Coefficient;
+                    @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@temp" });
+                                                    } else if (@d.Belong == "MinutesToFallAsleep"){
+                                            //要取反
+                                            var temp = 0 - d.Coefficient;
+                    @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@temp" });
+                                                    } else if (@d.Belong == "SleepEfficiency"){
+                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                        } 
+    }
+            console.log(cSleepEfficiency);
+            console.log(cMinutesToFallAsleep);
+            console.log(cMinutesAsleep);
+            console.log(cMinutesAwake);
+            console.log(cAwakeningsCount);
+
+
+
+            @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
+            {
+                    var dateOnly = d.DateStamp.ToShortDateString();
+
+                    @:MinutesAsleep.push({ Date: "@dateOnly", Value: "@d.MinutesAsleep" });
+                                                        @:MinutesAwake.push({ Date: "@dateOnly", Value: "@d.MinutesAwake" });
+                                                        @:AwakeningsCount.push({ Date: "@dateOnly", Value: "@d.AwakeningsCount" });
+                                                        @:MinutesToFallAsleep.push({ Date: "@dateOnly", Value: "@d.MinutesToFallAsleep" });
+                                                        @:SleepEfficiency.push({ Date: "@dateOnly", Value: "@d.SleepEfficiency" });
+
+    }
+
+            function PlotTimeseries(myData, section, sFeature) {
+
+                var w = 500;
+                var h = 200;
+                var margin = { top: 30, right: 20, bottom: 50, left: 40 };
+                width = w - margin.left - margin.right,
+                height = h - margin.top - margin.bottom;
+                parseDate = d3.time.format("%m/%d/%Y").parse;
+
+
+                var xRange = d3.scale.ordinal()
+                          .rangeRoundBands([0, width], 0.2);
+
+                var yRange = d3.scale.linear()
+                          .range([height, 0]);
+
+                var xAxis = d3.svg.axis()
+                              .scale(xRange)
+                              .orient("bottom")
+                              .ticks(8)
+                              .tickFormat(d3.time.format("%b %e"));
+
+                var yAxis = d3.svg.axis()
+                              .scale(yRange)
+                              .orient("left")
+                              .ticks(5);
+
+                var chart = d3.select(section).append("svg")
+                              .attr("width", w)
+                              .attr("height", h)
+                              .append("g")
+                               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                myData.forEach(function (d) {
+                    d.Date = parseDate(d.Date);
+                    d.Value = +d.Value;
+                });
+
+                xRange.domain(myData.map(function (d) { return d.Date; }));
+                yRange.domain([0, d3.max(myData, function (d) { return d.Value })]);
+
+                chart.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis)
+                    .selectAll("text")
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", "-.55em")
+                    .attr("transform", "rotate(-90)");
+
+                chart.append("g")
+                     .attr("class", "y axis")
+                     .call(yAxis)
+                     .append("text")
+                    //.attr("transform", "rotate(-90)")
+                    //.attr("y", 6)
+                    //.attr("dy", ".71em")
+                    //.style("text-anchor", "end")
+                    .text(sFeature);
+
+                var div = d3.select(section).append("div")
+                            .attr("class", "tooltip")
+                            .style("opacity", 0);
+                var formatTime = d3.time.format("%b %e");
+
+                chart.selectAll("rect")
+                     .data(myData)
+                     .enter().append("rect")
+                     .attr("class", "bar")
+                     .attr("x", function (d) { return xRange(d.Date); })
+                     .attr("width", xRange.rangeBand())
+                     .attr("y", function (d) { return yRange(d.Value); })
+                     .attr("height", function (d) { return (height - yRange(d.Value)); })
+                     .attr("fill", "#bdbdbd")
+                     .on("mouseover", function (d) {
+                         d3.select(this)
+                           .attr("fill", "#3376bf");
+
+                         div.transition()
+                            .duration(200)
+                            .style("opacity", 0.9);
+
+                         if (section == '#SleepEfficiencyTimeseries') { tooltiptext = formatTime(d.Date) + "<br/>" + d.Value + "%"; }
+                         else if (section == '#MinutesToFallAsleepTimeseries') { tooltiptext = formatTime(d.Date) + "<br/>" + d.Value + " min"; }
+                         else if (section == '#MinutesAwakeTimeseries') { tooltiptext = formatTime(d.Date) + "<br/>" + d.Value + " min"; }
+                         else if (section == '#AwakeningsCountTimeseries') { tooltiptext = formatTime(d.Date) + "<br/>" + d.Value + " awakenings/restlessness"; }
+                         else { tooltiptext = formatTime(d.Date) + "<br/>" + d.Value; }
+
+
+                         div.html(tooltiptext)
+                            .style("left", (d3.event.pageX - 64) + "px")
+                            .style("top", (d3.event.pageY - 12) + "px");
+
+                     })
+                     .on("mouseout", function (d) {
+                         d3.select(this)
+                           .attr("fill", "#bdbdbd");
+                         div.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                     });
+            }
+
+            alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
+
+        </script>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 brdr-tp brdr-rght brdr-bttm brdr-lft" id="SleepFeatures">
+
+            <h2> Sleep Structure </h2>
+            <h4> Your sleep structure is characterized by the following 6 aspects.</h4><hr />
+
+            <div id="MinutesAsleepTimeseries">
+                <div style="color:#3376bf"> <h4> <b> Minutes Asleep </b> </h4> </div>
+                <p>
+                    <button type="button" class="btn btn-primary btn-xs" id="MinutesAsleep" onclick="testVis(cMinutesAsleep, 'MinutesAsleep')"> Explore what impact my minutes asleep from my Fitbit data  &raquo; </button>
+                </p>
+                <script type="text/javascript">
+                    PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "Time asleep (min)");
+                </script>
+                <hr />
+            </div>
+
+            <div id="MinutesAwakeTimeseries">
+                <div style="color:#3376bf"> <h4> <b> Minutes Awake </b> </h4> </div>
+                <p>
+                    @*Want to know what factors impact the time you were awake? &nbsp; *@
+                    <button type="button" class="btn btn-primary btn-xs" id="MinutesAwake" onclick="testVis(cMinutesAwake, 'MinutesAwake')"> Explore what impact my minutes awake from my Fitbit data &raquo; </button>
+                </p>
+                <script type="text/javascript">
+                    PlotTimeseries(MinutesAwake, "#MinutesAwakeTimeseries", "Time awake (min)");
+                </script>
+                <hr />
+            </div>
+
+            <div id="AwakeningsCountTimeseries">
+                <div style="color:#3376bf"> <h4> <b> Awakening Count </b> </h4> (The number of awakenings during a night)</div>
+                <p>
+                    @*Want to know what factors impact your count of awakening? &nbsp;*@
+                    <button type="button" class="btn btn-primary btn-xs" id="AwakeningsCount" onclick="testVis(cAwakeningsCount, 'AwakeningsCount')"> Explore what impact my number of awakenings from my Fitbit data &raquo; </button>
+                </p>
+                <script type="text/javascript">
+                    PlotTimeseries(AwakeningsCount, "#AwakeningsCountTimeseries", "Awakenings count ");
+                </script>
+                <hr />
+            </div>
+
+            <div id="MinutesToFallAsleepTimeseries">
+                <div style="color:#3376bf"> <h4> <b> Minutes To Fall Asleep </b> </h4>(Time between light out and falling asleep) </div>
+                <p>
+                    @*Want to know what factors impact how fast you fall asleep? &nbsp;*@
+                    <button type="button" class="btn btn-primary btn-xs" id="MinutesToFallAsleep" onclick="testVis(cMinutesToFallAsleep, 'MinutesToFallAsleep')"> Explore what impact how fast I fall asleep from my Fitbit data &raquo; </button>
+                </p>
+                <script type="text/javascript">
+                    PlotTimeseries(MinutesToFallAsleep, "#MinutesToFallAsleepTimeseries", "Time to fall asleep (min)");
+                </script>
+                <hr />
+            </div>
+
+            <div id="SleepEfficiencyTimeseries">
+                <div style="color:#3376bf"> <h4> <b> Sleep Efficiency </b> </h4> (The percentage of minutes asleep versus total minutes in bed)</div>
+                <br>
+                <!--script type="text/javascript">
+                    var SleepEfficiencyAvg = d3.mean(SleepEfficiency, function (d) { return d.Value; });
+                    document.getElementById("SleepEfficiencyTimeseries").innerHTML = SleepEfficiencyAvg;
+                </script-->
+
+                <p>
+                    <button type="button" class="btn btn-primary btn-xs" id="SleepEfficiency" onclick="testVis(cSleepEfficiency,'SleepEfficiency')"> Explore what impact my sleep efficiency from my Fitbit data &raquo; </button>
+                </p>
+                <script type="text/javascript">
+                    PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "Sleep Efficiency(%)");
+                </script>
+                <hr />
+            </div>
+
+            <div style="color:#3376bf">
+                <h5>
+                    <b>
+                        <a href="/Userdatas/FactorList" class="btn btn-primary">Explore other factors that may impact your sleep &raquo; </a>
+                        @*a href="@Url.Action("FactorList", "Userdatas")" class="elements"><span>Explore other factors that may affect your sleep &raquo; </span></a>*@
+                    </b>
+                </h5>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-6 sidebar-outer" id="AffectingFactors">
+            <div class="sidebar" style="position:fixed">
+                <h2 id="Title">
+ 
+                </h2>
+                <br>
+                <br>
+                <br>
+
+                <div id="BubbleChart">
+                    <script type="text/javascript">
+
+                        var width = 600, height = 500
+                        format = d3.format(",d");
+
+                        var svg = d3.select("#BubbleChart").append("svg")
+                            .attr("width", width)
+                            .attr("height", height)
+                            .attr("class", "bubble");
+
+                        var legend_data = [
+                                { "color": "#00FFBF", "text": "Very strong positive" },
+                                { "color": "#58FAD0", "text": "Strong positive" },
+                                { "color": "#81F7D8", "text": "Moderate positive" },
+                                { "color": "#A9F5E1", "text": "Weak positive" },
+                                { "color": "#F6CED8", "text": "Weak negative" },
+                                { "color": "#F7819F", "text": "Moderate negative" },
+                                { "color": "#FE2E64", "text": "Strong negative" },
+                                { "color": "#FF0040", "text": "Very strong negative" }
+                        ];
+
+                        function processData(data) {
+                            //layout is part of D3′s family of hierarchical layouts and
+                            // by default, D3 assumes that the input data is an object with
+                            // a children array, so it is convenient to return the object looks like,
+                            // {children: [an array of objects]}.
+
+                            return { children: data };
+                        }
+
+                        function testVis(mydata, sfeature) {
+
+                            svg.selectAll("*").remove(); // clean up canvas :D
+
+                            document.getElementById("Title").innerHTML = "The Factors that Impact " + sfeature ;
+
+                            if (mydata.length == 0) {
+                                alert("None of the tracked factors seems to impact your" + sfeature + "! Probably track more factors.");
+                            } else {
+
+                                var div = d3.select("#BubbleChart").append("div")
+                                     .attr("class", "tooltip")
+                                    .style("opacity", 0);
+
+                                var bubble = d3.layout.pack()
+                                .size([width - 200, height - 100])
+                                .value(function (d) { temp = Math.abs(d.Coefficient); if (temp >= 0) { return temp; } })
+                                .padding(15); // padding between adjacent bubbles
+
+                                var nodes = bubble.nodes(processData(mydata)).filter(function (d) { return !d.children; });
+                                var vis = svg.selectAll("g.node").data(nodes);
+
+                                var visEnter = vis.enter().append("g")
+                                .attr("class", "node")
+                                .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; })
+
+                                var circles = visEnter.append("circle")
+                                //.attr("r", function (d) { return d.r; })
+                                .attr("r", 60)
+                                .style("fill", function (d) {
+                                    coeff = d.Coefficient;
+                                    if (coeff < 0) {
+                                        temp = Math.abs(coeff);
+                                        if ((temp >= 0.8) && (temp <= 1.0)) { return "#FF0040"; }
+                                        else if ((temp < 0.8) && (temp >= 0.5)) { return "#FE2E64"; }
+                                        else if ((temp < 0.5) && (temp >= 0.3)) { return "#F7819F"; }
+                                        else if ((temp < 0.3) && (temp >= 0.2)) { return "#F6CED8"; }
+                                        else { return "#bdbdbd"; }
+                                    } else if (coeff >= 0) {
+                                        if ((coeff >= 0.8) && (coeff <= 1.0)) { return "#00FFBF"; }
+                                        else if ((coeff < 0.8) && (coeff >= 0.5)) { return "#58FAD0"; }
+                                        else if ((coeff < 0.5) && (coeff >= 0.3)) { return "#81F7D8"; }
+                                        else if ((coeff < 0.3) && (coeff >= 0.2)) { return "#A9F5E1"; }
+                                    }
+                                })
+                                .on("mouseover", function (d) {
+                                    d3.select(this)
+                                        .attr("fill", "orange");
+                                    div.transition()
+                                        .duration(100)
+                                        .style("opacity", 0.9);
+                                    div.html(d.Name)
+                                        .style("left", (d3.event.pageX - 600) + "px")
+                                        .style("top", (d3.event.pageY - 200) + "px");
+                                })
+                                    .on("mouseout", function (d) {
+                                        d3.select(this)
+                                           .attr("fill", "#bdbdbd");
+                                        div.transition()
+                                            .duration(100)
+                                            .style("opacity", 0);
+                                    });
+
+                                visEnter.append("text")
+                                .attr("dy", ".3em")
+                                .style("text-anchor", "middle")
+                                //.text(function (d) { return d.Name.substring(0, d.r / 3); });
+                                .text(function (d) { return d.Name; });
+
+
+                                var legend = svg.selectAll(".legend")
+                                    .data(legend_data)
+                                  .enter().append("g")
+                                    .attr("class", "legend")
+                                    .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; });
+
+                                legend.append("rect")
+                                    .attr("x", width - 180)
+                                    .attr("width", 18)
+                                    .attr("height", 18)
+                                    .style("fill", function (d) { return d.color; });
+
+                                legend.append("text")
+                                    .attr("x", width - 150)
+                                    .attr("y", 9)
+                                    .attr("dy", ".35em")
+                                    .style("text-anchor", "start")
+                                    .text(function (d) { return d.text; });
+                            }
+                        }
+
+
+                    </script>
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+   
+
+        <h2>Retrieved Sleep Structure</h2>
+        <table>
+            <tr>
+                <td>Date</td>
+                <td>MinutesAsleep</td>
+                <td>MinutesAwake</td>
+                <td>AwakeningsCount </td>
+                <td>MinutesToFallAsleep  </td>
+                <td>MinutesAfterWakeup  </td>
+                <td>SleepEfficiency  </td>
+            </tr>
+
+            @foreach (Userdata result in Model.AllData)
+            {
+                <tr>
+                    <td>@result.DateStamp</td>
+                    <td>@result.MinutesAsleep</td>
+                    <td>@result.MinutesAwake</td>
+                    <td>@result.AwakeningsCount</td>
+                    <td>@result.MinutesToFallAsleep </td>
+                    <td>@result.MinutesAfterWakeup </td>
+                    <td>@result.SleepEfficiency </td>
+                </tr>
+            }
+        </table>
+
+        <h2>Retrieved Affecting Factors 1</h2>
+        <table>
+            <tr>
+                <td>Date</td>
+                <td>CaloriesIn </td>
+                <td>Water </td>
+                <td>CaloriesOut  </td>
+                <td>Steps  </td>
+                <td>Distance  </td>
+                <td>MinutesSedentary   </td>
+                <td>MinutesLightlyActive   </td>
+                <td>MinutesFairlyActive   </td>
+            </tr>
+
+            @foreach (Userdata result in Model.AllData)
+            {
+                <tr>
+                    <td>@result.DateStamp</td>
+                    <td>@result.CaloriesIn</td>
+                    <td>@result.Water  </td>
+                    <td>@result.CaloriesOut </td>
+                    <td>@result.Steps </td>
+                    <td>@result.Distance  </td>
+                    <td>@result.MinutesSedentary  </td>
+                    <td>@result.MinutesLightlyActive  </td>
+                    <td>@result.MinutesFairlyActive  </td>
+                </tr>
+            }
+        </table>
+
+        <h2>Retrieved Affecting Factors 2</h2>
+        <table>
+            <tr>
+                <td>Date</td>
+                <td> MinutesVeryActive   </td>
+                <td> ActivityCalories   </td>
+                <td> Floors   </td>
+                <td> TimeEnteredBed   </td>
+                <td> Weight   </td>
+                <td> BMI   </td>
+                <td> Fat   </td>
+            </tr>
+
+            @foreach (Userdata result in Model.AllData)
+            {
+                <tr>
+                    <td>@result.DateStamp</td>
+                    <td>@result.MinutesVeryActive   </td>
+                    <td>@result.ActivityCalories   </td>
+                    <td>@result.Floors    </td>
+                    <td>@result.TimeEnteredBed    </td>
+                    <td>@result.Weight     </td>
+                    <td>@result.BMI     </td>
+                    <td>@result.Fat    </td>
+
+                </tr>
+            }
+            </table> 
+
+    @*
+
+        <h2>Correlations</h2>
+        <table>
+            <tr>
+                <td>Belong</td>
+                <td>Factor</td>
+                <td>Coefficient</td>
+            </tr>
+
+            @foreach (SleepMakeSense.Models.CorrList result in Model.CorrCoefficient)
+            {
+                <tr>
+                    <td>@result.Belong</td>
+                    <td>@result.Name</td>
+                    <td>@result.Coefficient</td>
+                </tr>
+            }
+        </table>
+    *@
+
+</body>
+
+
+
+
+
+</html>

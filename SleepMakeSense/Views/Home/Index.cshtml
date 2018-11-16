@@ -1,0 +1,100 @@
+﻿@using SleepMakeSense.Models
+
+@model HomePageViewModel
+
+@{
+    ViewBag.Title = "NokoriMe";
+}
+
+
+<!-- Pandita:If user is already logged in, direct to Devices.cshtml; else, direct to log in page -->
+@*
+    Updated to be a login/regrestration screen.
+    If the uers is logged in, they will be propted to either create and account or log in
+    If they are logged in, they will be propted to sync there data and load the next page
+    If the user has not connected their FitBit, it will prompt, however this is broken //Pandita: broken??
+    Done By Sean - 21/5/16
+    style="@((bool)Model.Userdata.DiaryDataNight ? "display:none" : "display:"
+*@
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 style="color:#25686E">NokoriMe</h1>
+        @if (Request.IsAuthenticated == false)
+        {
+
+            <p><a href="/Account/Register" class="btn btn-primary btn-lg" style="background-color:#94C3C7;color:#fff">Create an Account</a></p>
+            <p><a href="/Account/Login" class="btn btn-primary btn-lg" style="background-color:#94C3C7;color:#fff">Login</a></p>
+        }
+        else
+        {
+            <p>@Html.ActionLink("See My Stress status", "DirectToSync", "Fitbit", new { }, new { @class = "btn btn-primary btn-lg", @style= "background-color:#94C3C7;color:#fff" })</p>
+
+            if (!Model.TodayDiaryEntry && Model.DiarySetup)
+            {<p>@Html.ActionLink("Log today's Diary Info", "EnterDiaryData", "DiaryData", new { }, new { @class = "btn btn-primary btn-lg", @style = "background-color:#94C3C7;color:#fff" })</p>}
+            else if (Model.TodayDiaryEntry && Model.DiarySetup)
+            {
+                <!--script type="text/javascript">console.log("@Model.TodayDiaryEntry")</script-->
+
+                <i style="font-size:small;color:#25686E">Today diary infromation has already been saved.</i><br />
+                <i style="font-size:small; color:#25686E">Do you want to update it?</i>
+                <p>@Html.ActionLink("Log today's Diary Info", "EnterDiaryData", "DiaryData", new { }, new { @class = "btn btn-success btn-sm" })</p>
+            }
+            if (!Model.DiarySetup)
+           {<p>@Html.ActionLink("Setup Diary Data", "DiaryDataSetup", "DiaryData", new { }, new { @class = "btn btn-primary btn-lg" })</p>}
+        }
+
+
+
+        @*
+                Work in progress
+            else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected == false)
+            {
+                <p>
+            <a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
+            }
+            else if (Request.IsAuthenticated == false && ViewBag.FitbitConnected)
+            {
+                <p><a href="/Userdatas/Sync" class="btn btn-primary">See Your Stats &raquo;</a></p>
+            }
+            else
+            {
+                <p class="lead">Error: Viewbag (FitBit not being Checked)</p>
+            }
+        *@
+    </div>
+</div>
+
+@*
+    <div data-embed_type="product" data-shop="aliceintokyo.myshopify.com" data-product_name="Canmake - Matte &amp; Crystal Cheeks" data-product_handle="canmake-matte-crystal-cheeks" data-has_image="true" data-display_size="compact" data-redirect_to="checkout" data-buy_button_text="Buy now" data-buy_button_out_of_stock_text="Out of Stock" data-buy_button_product_unavailable_text="Unavailable" data-button_background_color="7db461" data-button_text_color="ffffff" data-product_modal="false" data-product_title_color="000000" data-next_page_button_text="Next page"></div>
+    <script type="text/javascript">
+    document.getElementById('ShopifyEmbedScript') || document.write('<script type="text/javascript" src="https://widgets.shopifyapps.com/assets/widgets/embed/client.js" id="ShopifyEmbedScript"><\/script>');
+    </script>
+    <noscript><a href="https://aliceintokyo.myshopify.com/cart/10670132929:1" target="_blank">Buy Canmake - Matte &amp; Crystal Cheeks</a></noscript>
+
+    <div data-embed_type="product" data-shop="aliceintokyo.myshopify.com" data-product_name="Canmake - Matte &amp; Crystal Cheeks" data-product_handle="canmake-matte-crystal-cheeks" data-has_image="true" data-display_size="compact" data-redirect_to="cart" data-buy_button_text="Add to cart" data-buy_button_out_of_stock_text="Out of Stock" data-buy_button_product_unavailable_text="Unavailable" data-button_background_color="7db461" data-button_text_color="ffffff" data-product_modal="false" data-product_title_color="000000" data-next_page_button_text="Next page"></div>
+    <script type="text/javascript">
+        document.getElementById('ShopifyEmbedScript') || document.write('<script type="text/javascript" src="https://widgets.shopifyapps.com/assets/widgets/embed/client.js" id="ShopifyEmbedScript"><\/script>');
+    </script>
+    <noscript><a href="https://aliceintokyo.myshopify.com/cart/10670132929:1" target="_blank">Buy Canmake - Matte &amp; Crystal Cheeks</a></noscript>
+*@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h2 class="h-center"> Personalised</h2>
+            <p class="p-center">
+                NokoriMe helps draw conclusions from your own personal data. Track these common lifestyle factors and see how they impact your stress level.
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h2 class="h-center"> Explore </h2>
+            <p class="p-center">
+                Sync and integrate your self-tracking data and get insights
+                right away. NokoriMe supports easy data integration from various tracking devices and mobile apps.            </p>
+        </div>
+        <div class="col-sm-4">
+            <h2 class="h-center"> Track </h2>
+            <p class="p-center"> NokoriMe not only tracks your stress levels and lifestyle factors. This combination of data can help you understand what is good and bad for you and what factors causes stress levels to increase.</p>
+        </div>
+    </div>
+</div>

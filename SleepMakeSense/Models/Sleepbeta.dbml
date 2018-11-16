@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="sleepexplorer-database" Class="SleepbetaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=sleepexplorerdbserver.database.windows.net;Initial Catalog=SleepBeta;Persist Security Info=True;User ID=DBadmin" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SleepBetaConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
+    <Type Name="AspNetUser">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="EmailConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SecurityStamp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumberConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TwoFactorEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LockoutEndDateUtc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_DiaryData" Member="DiaryDatas" ThisKey="Id" OtherKey="AspNetUserId" Type="DiaryData" />
+      <Association Name="AspNetUser_FitbitData" Member="FitbitDatas" ThisKey="Id" OtherKey="AspNetUserId" Type="FitbitData" />
+      <Association Name="AspNetUser_TokenManagement" Member="TokenManagements" ThisKey="Id" OtherKey="AspNetUserId" Type="TokenManagement" />
+      <Association Name="AspNetUser_UserQuestion" Member="UserQuestions" ThisKey="Id" OtherKey="AspNetUserId" Type="UserQuestion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DiaryData" Member="DiaryDatas">
+    <Type Name="DiaryData">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AspNetUserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="DateStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="WakeUpFreshness" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Mood" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Stress" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Tiredness" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Dream" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BodyTemp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Hormone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SchoolStress" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CoffeeAmt" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CoffeeTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AlcoholAmt" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AlcoholTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NapTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="NapDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DigDeviceDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GamesDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SocialActivites" Member="SocialFamily" Storage="_SocialActivites" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SocialActivity" Member="SocialFriend" Storage="_SocialActivity" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MusicDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TVDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="WorkDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ExerciseDuration" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ExerciseIntensity" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DinnerTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SnackTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AmbientTemp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AmbientHumd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Light" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SunRiseTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SunSetTime" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SocialMedia" Type="System.String" CanBeNull="false" />
+      <Association Name="AspNetUser_DiaryData" Member="AspNetUser" ThisKey="AspNetUserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FitbitData" Member="FitbitDatas">
+    <Type Name="FitbitData">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AspNetUserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="DateStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="SleepEfficiency" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TimeEnteredBed" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesAsleep" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesAwake" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TimeInBed" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AwakeningsCount" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesToFallAsleep" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesAfterWakeup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Steps" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Distance" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesSedentary" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesLightlyActive" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesFairlyActive" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MinutesVeryActive" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Water" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CaloriesIn" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CaloriesOut" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ActivityCalories" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Weight" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BMI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Fat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="AspNetUser_FitbitData" Member="AspNetUser" ThisKey="AspNetUserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TokenManagements" Member="TokenManagements">
+    <Type Name="TokenManagement">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Token" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TokenType" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="ExpiresIn" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RefreshToken" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AspNetUserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="DateChanged" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_TokenManagement" Member="AspNetUser" ThisKey="AspNetUserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserQuestions" Member="UserQuestions">
+    <Type Name="UserQuestion">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AspNetUserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="WakeUpFreshness" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Mood" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Stress" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Tiredness" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Dream" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SchoolQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CoffeeQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AlcoholQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NapQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DigDeviceDurationQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="GameDurationQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SocialMediaDurationQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SocialActivityDurationQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="MusicDurationQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TVDurationQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="WorkQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ExersiseQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="FoodQuestions" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="GenderHormoneQuestion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUser_UserQuestion" Member="AspNetUser" ThisKey="AspNetUserId" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

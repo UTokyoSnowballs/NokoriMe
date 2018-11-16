@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../CSSfiles/font-awesome.css">
+    <title>@ViewBag.Title - SleepExplorer</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("SleepBeta", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
+                    <li><a href="@Url.Action("About", "Home")"><i class="fa fa-info fa-fw" aria-hidden="true"></i>&nbsp; About</a></li>
+                    
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    
+        @RenderBody()
+    
+
+    
+    <div class="container">
+        <footer>
+            
+            
+            <p class="text-muted">&copy; @DateTime.Now.Year - SleepMakeSense. All Rights Reserved.</p>
+            
+        </footer>
+    </div>
+        
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-83126858-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

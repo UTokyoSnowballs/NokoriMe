@@ -1,0 +1,592 @@
+﻿@using SleepMakeSense.Models
+@model SyncViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sync</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style type="text/css">
+        .axis path, .axis line {
+            fill: none;
+            stroke: #747F97;
+            shape-rendering: crispEdges;
+        }
+
+        .axis {
+            font-size: 14px;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        .svg-container {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* aspect ratio */
+            vertical-align: top;
+            overflow: hidden;
+        }
+
+        .svg-content-responsive {
+            display: inline-block;
+            position: absolute;
+            top: 10px;
+            left: 0;
+        }
+
+        
+
+        .tooltip-timeseries {
+            width: 160px;
+            height: 36px;
+            padding: 2px;
+            font: 12px sans-serif;
+            color: #373E4F;
+            background-color:#fff;
+            //background: -webkit-linear-gradient(141deg, #F74657, #459EE8) !important;
+            //background: linear-gradient(141deg, #F74657, #459EE8)!important;
+            //background: -o-linear-gradient(141deg, #F74657, #459EE8) !important;
+            //background: -moz-linear-gradient(141deg, #F74657, #459EE8) !important;
+            border: 0px;
+            border-radius: 8px;
+            text-align: center;
+            pointer-events: none;
+            position: absolute;
+        }
+
+        .tooltip.bottom
+        {
+            position: absolute;
+            text-align: left;
+            width: 200px;
+            height: auto;
+            padding: 16px;
+            font: 12px sans-serif;
+            color: white;
+            //background: -webkit-linear-gradient(141deg, #F74657, #459EE8) !important;
+            //background: linear-gradient(141deg, #F74657, #459EE8) !important;
+            //background: -o-linear-gradient(141deg, #F74657, #459EE8) !important;
+            //background: -moz-linear-gradient(141deg, #F74657, #459EE8) !important;
+            border: 0px;
+            border-radius: 8px;
+            text-align: center;
+            pointer-events: none;
+
+
+        }
+
+        .tooltip-bubble h4 {
+            text-align: left;
+            color: white;
+        }
+
+        table.corrList{
+            border-collapse:separate;
+            border-spacing:15px 15px;
+            background-color:  #2B747B ;
+            position:center;
+        }
+        td.blank{
+            background-color: #373E4F;
+        }
+
+        td, tr {
+            background-color:#2C3041;
+            width: 200px;
+            height: 100px;
+            font-size: large;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="DataProcessing">
+
+        @helper CoefficientList(List<CorrList> corrList, String type)
+{
+// 20170213 Pandita: What's the function of the "counter" ???
+int counter = 1;
+
+if (corrList.Count > 0)
+{
+        
+            @*<div class="col-lg-10">*@
+
+                <table class="corrList">
+                    @foreach (SleepMakeSense.Models.CorrList corr in corrList)
+                    {
+
+                        var color = "#ffffff";
+                        var absCoeff = Math.Abs(corr.Coefficient);
+                        if (absCoeff >= 0 && absCoeff < 0.6)
+                        {
+                            if (corr.Positive)
+                            {
+                                color = "#FFC0BD";
+
+
+
+                            }
+                            else
+                            {
+                                color = "#A5DFAC";
+                            }
+                        }
+                        else if (absCoeff >= 0.6 && absCoeff < 1)
+                        {
+                            if (corr.Positive)
+                            {
+                                color = "#B5423C";
+                            }
+                            else
+                            {
+                                color = "#369C43";
+                            }
+                        }
+
+                        if ((counter % 2) == 1 || counter == 1)
+                        {
+                            WriteLiteral("<tr>");
+                        }
+
+                        @*
+                            <td data-toggle="tooltip" title="@corr.Note" data-placement="left"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name @corr.Coefficient @absCoeff</text></td>
+                        *@
+
+                        <td data-toggle="tooltip" title="@corr.Note" data-placement="left" style="background-color:#25686E"><i style="color:@color" class="@corr.Picture"></i>  <text style="color:@color">@corr.Name </text></td>
+
+
+                        counter++;
+                        if ((counter % 2) == 1 && counter != (corrList.Count + 1))
+                        {
+                            WriteLiteral("</tr>");
+                        }
+                    }
+
+                    @if ((corrList.Count % 2) != 0)
+                    {
+                        //WriteLiteral("<td class='blank'></td></tr>");
+                    }
+                    else
+                    {
+                        WriteLiteral("</tr>");
+                    }
+                </table>
+            @*</div>*@
+        
+}
+else
+{
+    String Message = "None of the tracked factors seems to impact your " + type + ". We havn't found any connections in your data, please give us more infomation.";
+        @Message
+}
+
+}   
+
+        <script type="text/javascript">
+
+            var factorList = [];
+            var Stress = [];
+            var exercise = [];
+
+               var MinutesAsleep = [];
+                //var AwakeningsCount = [];
+                var SleepEfficiency = [];
+                var facCoff = 0;
+                var quest2 = false;
+                var quest3 = false;
+
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip();
+                })
+
+                @foreach (SleepMakeSense.Models.Userdata m in Model.UserData)
+                {
+                    var dateOnly = m.DateStamp.ToShortDateString();
+                    var weekday = m.DateStamp.DayOfWeek;
+
+                       @:MinutesAsleep.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.MinutesAsleep" });
+                                      @* @:AwakeningsCount.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.AwakeningsCount" });*@
+                                       @:SleepEfficiency.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.SleepEfficiency" });
+                                    @:Stress.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.PerceivedStress" });
+            @:exercise.push({ Date: "@dateOnly", Day: "@weekday", Value: "@m.ActivityCalories" });
+
+
+                            }
+                            alert("Your Fitbit data synced! Visualize your personal sleep affecting factors now.");
+
+                            function PlotTimeseries(myData, section, mark, sFeature) {
+
+                            d3.select(section).selectAll("*").remove();
+                            var red = "#B5423C";
+                            var blue = "#25686E";
+
+                            var w = 600;
+                            var h = 400;
+
+                            var margin = { top: 30, right: 20, bottom: 50, left: 40 },
+                    width = w - margin.left - margin.right,
+                    height = h - margin.top - margin.bottom;
+
+                    // 20170213 Pandita: the order of day and month !!
+                    //parseDate = d3.time.format("%d/%m/%Y").parse;
+                    var parseDate = d3.time.format("%m/%d/%Y").parse;
+
+                        var chart = d3.select(section).append("svg")
+                      .attr("width", w)
+                      .attr("height", h)
+                      .append("g")
+                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                        myData.forEach(function (d) {
+                            // 20170213 Pandita: date parse sorted.
+                            d.Date = parseDate(d.Date);
+                            console.log(d.Value);
+                            if (mark == "MinutesAsleep") { d.Value = +(d.Value / 60); }
+                            else
+                            d.Value = +d.Value;
+                            console.log(d.Value);
+                            //alert(d.Value);
+                        });
+
+                    var xRange = d3.scale.ordinal().rangeRoundBands([0, width], 0.2);
+
+                        var yRange = d3.scale.linear().range([height, 0]);
+
+                        var xAxis = d3.svg.axis()
+                                      .scale(xRange)
+                                      .orient("bottom")
+                                      .ticks(8)
+                                      .tickFormat(d3.time.format("%m-%d"));
+                        //.tickFormat(d3.time.format("%b-%d"));
+
+                        var yAxis = d3.svg.axis()
+                                      .scale(yRange)
+                                      .orient("left")
+                                      .ticks(5);
+
+                        xRange.domain(myData.map(function (d) { return d.Date; }));
+                    yRange.domain([0, d3.max(myData, function (d) { return d.Value; })]);
+
+                    chart.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis)
+                        .selectAll("text")
+                        .style("text-anchor", "end")
+                        .attr("dx", "-.8em")
+                        .attr("dy", "-.55em")
+                        .attr("transform", "rotate(-90)");
+
+                    chart.append("g")
+                        .attr("class", "y axis")
+                        .call(yAxis)
+                        .append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 6)
+                        .attr("dy", ".71em")
+                        .style("text-anchor", "end")
+                        .text(sFeature);
+
+                    var div = d3.select(section).append("div")
+                                .attr("class", "tooltip-timeseries")
+                                .style("opacity", 0);
+
+                    var formatTime = d3.time.format("%b %e");
+
+                    chart.selectAll("rect")
+                         .data(myData)
+                         .enter().append("rect")
+                         .attr("class", "bar")
+                         .attr("x", function (d) { return xRange(d.Date); })
+                         .attr("width", xRange.rangeBand())
+                         .attr("y", function (d) { return yRange(d.Value); })
+                         .attr("height", function (d) { return (height - yRange(d.Value)); })
+                         //.attr("fill", "#0000ff")
+                         .attr("fill", function (d) {
+                             if (mark == "Stress" && (d.Value > 15)) { return red; }
+                             else if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+
+                        //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                        else if (mark == "MinutesAsleep" && (d.Value < 7.0)) { return red; } // 20170213 Pandita: a proper threshold for teenageer
+                        else if (mark == "MinutesAsleep" && (d.Value > 9.0)) { return red; }
+                            //else if (mark == "Stress" && (d.Value > 15.0)) { return red; }
+                            else if (mark == "exercise" &&(d.value < 1000)){return red}
+
+                        //else if (mark == "AwakeningsCount" && (d.Value > 27)) { return red; } // 0.05*540 min
+                        else return blue;
+                    })
+                         .on("mouseover", function (d) {
+                        var matrix = this.getScreenCTM()
+                           .translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
+
+                        d3.select(this)
+                          .attr("fill", "#747F97");
+
+                        div.transition()
+                           .duration(200)
+                           .style("opacity", 0.9);
+
+                        if (mark == "SleepEfficiency") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + "%"; }
+                       // else if (mark == "AwakeningsCount") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " awakenings"; }
+                        else if (mark == "Stress") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " Stress Level"; }
+
+                        else if (mark == "MinutesAsleep") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value * 60 + " Minutes Asleep"; }
+                             //else
+                        else if (mark == "exercise") { tooltiptext = formatTime(d.Date) + " (" + d.Day + ")" + "<br/>" + d.Value + " Activity calories"; }
+
+
+
+
+                        div.html(tooltiptext)
+                           //.style("left", (d3.event.pageX - 34) + "px")
+                           //.style("top", (d3.event.pageY - 12) + "px");
+                           .style("left", (window.pageXOffset + matrix.e + 15) + "px")
+                           .style("top", (window.pageYOffset + matrix.f - 30) + "px");
+                        // Need a better solution here!!
+
+
+
+                    })
+                         .on("mouseout", function (d) {
+                        d3.select(this)
+                          //.attr("fill", "#bdbdbd");
+                          .attr("fill", function (d) {
+                              if (mark == "Stress" && (d.Value > 15)) { return red; } // 0.05*540 min
+
+                            if (mark == "SleepEfficiency" && (d.Value < 95)) { return red; }
+                            //else if (mark == "MinutesToFallAsleep" && (d.Value > 30)) { return red; }
+                           else if (mark == "MinutesAsleep" && ((d.Value > 9.0) || (d.Value < 7.0))) { return red; }
+                            else if (mark == "exercise" && (d.Value < 1000)) { return red; } // 0.05*540 min
+
+                          else return blue;
+                        });
+                        div.transition()
+                           .duration(500)
+                           .style("opacity", 0);
+                    });
+                }
+                        </script>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2> My Stress Data </h2>
+                <hr />
+            </div>
+        </div>
+        <div class="tabbable">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs" id="mytab">
+                        <li class="active">
+                            <a class="StressTimeseries" href="#StressTimeseries" data-toggle="tab">Stress</a>
+                        </li>
+                      <li>
+        <a class="MinutesAsleepTimeseries" href="#MinutesAsleepTimeseries" data-toggle="tab">Hours Asleep</a>
+
+    </li>
+
+   <li>
+        <a class="ExerciseTimeseries" href="#ExerciseTimeseries" data-toggle="tab">Activity Calories</a>
+    </li>
+
+    <li>
+        <a class="SleepEfficiencyTimeseries" href="#SleepEfficiencyTimeseries" data-toggle="tab">Sleep Efficiency</a>
+    </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-md-offset-6">
+                    <ul class="legend">
+                        <li>
+                            <span class="good"></span>good
+                        </li>
+                        <li>
+                            <span class="bad"></span>bad
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="im-centered">
+                <div class="tab-content">
+                    <div class="tab-pane active fade in" id="StressTimeseries">
+                        <div id="StressTimeseries">
+                            <script>
+                                PlotTimeseries(Stress, "#StressTimeseries", "Stress", "Stress Level");
+                            </script>
+                        </div>
+                    
+                                <div class="left">
+                                    @*<div class="col-md-12">
+            <div>*@
+                                    @CoefficientList(Model.StressCorrList, "Stress Level")
+                                    @* </div>
+            </div>*@
+                                </div>
+                        
+                    </div>
+                <div class="tab-pane fade" id="MinutesAsleepTimeseries">
+         <div id="MinutesAsleepTimeseries">
+              <script>
+                  PlotTimeseries(MinutesAsleep, "#MinutesAsleepTimeseries", "MinutesAsleep", "Hours");
+              </script>
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <div>
+                      @CoefficientList(Model.MinutesAsleepCorrList, "Hours Asleep")
+                  </div>
+              </div>
+          </div>
+      </div>
+  <div class="tab-pane fade" id="ExerciseTimeseries">
+        <div id="ExerciseTimeseries">
+            <script>
+                PlotTimeseries(exercise, "#ExerciseTimeseries", "exercise", "Calories");
+            </script>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    @CoefficientList(Model.ExerciseCorrList, "Activity Calories")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="SleepEfficiencyTimeseries">
+        <div id="SleepEfficiencyTimeseries">
+            <script>
+                PlotTimeseries(SleepEfficiency, "#SleepEfficiencyTimeseries", "SleepEfficiency", "%");
+            </script>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    @CoefficientList(Model.SleepEffiencyCorrList, "Sleep Efficiency")
+                </div>
+            </div>
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* for debugging only *@
+   
+
+    @*<h2>Retrieved Sleep Structure</h2>
+    <table>
+        <tr>
+            <td>Date</td>
+            <td>Stress</td>
+            <!--td>MinutesAwake</td>
+            <td>AwakeningsCount </td>
+            <td>SleepEfficiency  </td>
+            <td>SOL </td>
+            <td>BedTime </td-->
+        </tr>
+
+        @foreach (SleepMakeSense.Models.Userdata result in Model.UserData)
+            {
+            <tr>
+                <td>@result.DateStamp</td>
+                <td>@result.PerceivedStress</td>
+                <td>@result.MinutesAsleep</td>
+    @*<td>@result.AwakeningsCount</td>
+    <td>@result.SleepEfficiency </td>
+    <td>@result.MinutesToFallAsleep </td>
+    <td>@result.TimeEnteredBed </td>
+            </tr>
+        }
+    </table>
+
+    *@
+
+    @*
+
+
+    <h2>Retrieved Correlation List for MinutesAsleep</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Coefficient</td>
+            <td>Note</td>
+            <td>Positive</td>
+            <td>Picture</td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.CorrList cor in Model.MinutesAsleepCorrList)
+            {
+            <tr>
+                <td>@cor.Name</td>
+                <td>@cor.Coefficient</td>
+                <td>@cor.Note</td>
+                <td>@cor.Positive</td>
+                <td>@cor.Picture</td>
+            </tr>
+        }
+    </table>
+
+    <h2>Retrieved Correlation List for Awake Count</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Coefficient</td>
+            <td>Note</td>
+            <td>Positive</td>
+            <td>Picture</td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.CorrList cor in Model.AwakeCountCorrList)
+            {
+            <tr>
+                <td>@cor.Name</td>
+                <td>@cor.Coefficient</td>
+                <td>@cor.Note</td>
+                <td>@cor.Positive</td>
+                <td>@cor.Picture</td>
+            </tr>
+        }
+    </table>
+
+    <h2>Retrieved Correlation List for Sleep Efficiency</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Coefficient</td>
+            <td>Note</td>
+            <td>Positive</td>
+            <td>Picture</td>
+        </tr>
+
+        @foreach (SleepMakeSense.Models.CorrList cor in Model.SleepEffiencyCorrList)
+            {
+            <tr>
+                <td>@cor.Name</td>
+                <td>@cor.Coefficient</td>
+                <td>@cor.Note</td>
+                <td>@cor.Positive</td>
+                <td>@cor.Picture</td>
+            </tr>
+        }
+    </table>
+    *@
+
+
+</body>
+
+</html>

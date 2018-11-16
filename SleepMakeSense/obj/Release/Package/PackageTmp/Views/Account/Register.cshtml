@@ -1,0 +1,54 @@
+﻿@model SleepMakeSense.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Create a new account";
+}
+
+<div class="container">
+<div class="row">
+    
+    <div class="col-md-4 col-centered col-fixed">
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-md-12">
+        <h2 class="signin-heading">@ViewBag.Title</h2>
+        </div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        
+            @Html.LabelFor(m => m.Email, new { @class = "sr-only" })
+            <div class="col-md-12">
+                <label class="control-label" for="Email">E-mail</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        
+        
+            @Html.LabelFor(m => m.Password, new { @class = "sr-only" })
+            <div class="col-md-12">
+                <label class="control-label" for="Password">Password</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        
+        
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "sr-only" })
+            <div class="col-md-12">
+                <label class="control-label" for="ConfirmPassword">Confirm Password</label>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        
+        <div class="reg-btn">
+            <div class="col-md-12">
+                <p>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Register" />
+                </p>
+            </div>
+        </div>
+        
+    }
+
+    </div>
+</div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

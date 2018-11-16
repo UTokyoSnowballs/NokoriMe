@@ -1,0 +1,266 @@
+﻿@using SleepMakeSense.Models
+
+@model MyViewModel
+
+
+@using System.Web.Script.Serialization
+
+
+@{
+
+    //ViewBag.Title = "Sync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sync</title>
+</head>
+
+<body>
+
+<div id="DataProcessing">
+    <script type="text/javascript">
+
+    var cMinutesAsleep = [];
+    var cMinutesAwake = [];
+    var cAwakeningsCount = [];
+    var cTimeInBed = [];
+    var cMinutesToFallAsleep = [];
+    var cMinutesAfterWakeup = [];
+    var cSleepEfficiency = [];
+    var cAffectingFactors = []
+
+    var MinutesAsleep = [];
+    var MinutesAwake = [];
+    var AwakeningsCount = [];
+    var TimeInBed = [];
+    var MinutesToFallAsleep = [];
+    var MinutesAfterWakeup = [];
+    var SleepEfficiency = [];
+
+    @foreach (SleepMakeSense.Models.CorrList d in Model.CorrCoefficient)
+            {
+
+            if (@d.Belong == "MinutesAsleep") {
+                if (@d.Name == "BMI") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Body Mass Index" });
+                                                                    }
+                else if (@d.Name == "Floors") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Floors climbed during a whole day" });
+                                                            }
+                else if (@d.Name == "Fat") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Fat rate" });
+                                                        }
+                else if (@d.Name == "Steps") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Steps walked during a whole day" });
+                                                    }
+                else if (@d.Name == "CaloriesOut") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Total amount of calories burnt during a whole day" });
+                                                }
+                else if (@d.Name == "ActivityCalories") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Total amount of calories burnt during exercises" });
+                                            }
+                else if (@d.Name == "Distance") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Total distance walked during a whole day" });
+                                        }
+                else if (@d.Name == "MinutesFairlyActive") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Minutes spent fairly active during a whole day" });
+                                    }
+                else if (@d.Name == "CaloriesIn") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Total amount of calories intaken during a whole day" });
+                                            }
+                else if (@d.Name == "MinutesVeryActive") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Minutes spent very active during a whole day" });
+                                        }
+                else if (@d.Name == "MinutesSedentary") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Minutes spent sitting during a whole day" });
+                                    }
+                else if (@d.Name == "MinutesLightlyActive") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Minutes spent lightly active during a whole day" });
+                                    }
+                else if (@d.Name == "Water") {
+                    @:cAffectingFactors.push({ Name: "@d.Name", Coefficient: "0.5", Note: "Total amount of water (ml) drunk during a whole day" });
+                                }
+             }
+
+            if (Math.Abs(@d.Coefficient) > 0.2) {
+
+                if (@d.Belong == "MinutesAsleep") {
+                    @:cMinutesAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                    }
+                else if (@d.Belong == "MinutesAwake")
+                {
+                    @:cMinutesAwake.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                                                    }
+                else if (@d.Belong == "AwakeningsCount")
+                {
+                    @:cAwakeningsCount.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                                                }
+                else if (@d.Belong == "TimeInBed")
+                {
+                    @:cTimeInBed.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                                            }
+                else if (@d.Belong == "MinutesToFallAsleep")
+                {
+                    @:cMinutesToFallAsleep.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                                        }
+                else if (@d.Belong == "MinutesAfterWakeup")
+                {
+                    @:cMinutesAfterWakeup.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                                    }
+                else if (@d.Belong == "SleepEfficiency")
+                {
+                    @:cSleepEfficiency.push({ Name: "@d.Name", Coefficient: "@d.Coefficient" });
+                                                                                                                                                                                                    }
+                }
+
+            }
+
+
+
+    @foreach (SleepMakeSense.Models.Userdata d in Model.AllData)
+            {
+                    var dateOnly = d.DateStamp.ToShortDateString();
+
+                    @:MinutesAsleep.push({ Date: "@dateOnly", Value: "@d.MinutesAsleep" });
+                                                                                    @:MinutesAwake.push({ Date: "@dateOnly", Value: "@d.MinutesAwake" });
+                                                                                    @:AwakeningsCount.push({ Date: "@dateOnly", Value: "@d.AwakeningsCount" });
+                                                                                    @:TimeInBed.push({ Date: "@dateOnly", Value: "@d.TimeInBed" });
+                                                                                    @:MinutesToFallAsleep.push({ Date: "@dateOnly", Value: "@d.MinutesToFallAsleep" });
+                                                                                    @:SleepEfficiency.push({ Date: "@dateOnly", Value: "@d.SleepEfficiency" });
+
+                    /*@:MinutesAsleep.push(@d.MinutesAsleep);
+                                @:MinutesAwake.push(@d.MinutesAwake);
+                                @:AwakeningsCount.push(@d.AwakeningsCount);
+                                @:TimeInBed.push(@d.TimeInBed);
+                                @:MinutesToFallAsleep.push(@d.MinutesToFallAsleep);
+                                @:SleepEfficiency.push(@d.SleepEfficiency);*/
+
+    }
+
+
+    console.log(SleepEfficiency);
+    /*console.log(cMinutesAsleep);
+    console.log(cMinutesAwake);
+    console.log(cAwakeningsCount);
+    console.log(cTimeInBed);
+    console.log(cMinutesToFallAsleep);
+    console.log(cMinutesAfterWakeup);
+    console.log(cSleepEfficiency);
+    console.log(cAffectingFactors);*/
+
+    </script>
+    </div>
+
+        <h2>Retrieved Sleep Structure</h2>
+        <table>
+            <tr>
+                <td>Date</td>
+                <td>MinutesAsleep</td>
+                <td>MinutesAwake</td>
+                <td>AwakeningsCount </td>
+                <td>TimeInBed </td>
+                <td>MinutesToFallAsleep  </td>
+                <td>MinutesAfterWakeup  </td>
+                <td>SleepEfficiency  </td>
+            </tr>
+
+            @foreach (Userdata result in Model.AllData)
+            {
+                <tr>
+                    <td>@result.DateStamp</td>
+                    <td>@result.MinutesAsleep</td>
+                    <td>@result.MinutesAwake</td>
+                    <td>@result.AwakeningsCount</td>
+                    <td>@result.TimeInBed </td>
+                    <td>@result.MinutesToFallAsleep </td>
+                    <td>@result.MinutesAfterWakeup </td>
+                    <td>@result.SleepEfficiency </td>
+                </tr>
+            }
+        </table>
+
+        <h2>Retrieved Affecting Factors 1</h2>
+        <table>
+            <tr>
+                <td>Date</td>
+                <td>CaloriesIn </td>
+                <td>Water </td>
+                <td>CaloriesOut  </td>
+                <td>Steps  </td>
+                <td>Distance  </td>
+                <td>MinutesSedentary   </td>
+                <td>MinutesLightlyActive   </td>
+                <td>MinutesFairlyActive   </td>
+            </tr>
+
+            @foreach (Userdata result in Model.AllData)
+            {
+                <tr>
+                    <td>@result.DateStamp</td>
+                    <td>@result.CaloriesIn</td>
+                    <td>@result.Water  </td>
+                    <td>@result.CaloriesOut </td>
+                    <td>@result.Steps </td>
+                    <td>@result.Distance  </td>
+                    <td>@result.MinutesSedentary  </td>
+                    <td>@result.MinutesLightlyActive  </td>
+                    <td>@result.MinutesFairlyActive  </td>
+                </tr>
+            }
+        </table>
+
+        <h2>Retrieved Affecting Factors 2</h2>
+        <table>
+            <tr>
+                <td>Date</td>
+                <td> MinutesVeryActive   </td>
+                <td> ActivityCalories   </td>
+                <td> Floors   </td>
+                <td> TimeEnteredBed   </td>
+                <td> Weight   </td>
+                <td> BMI   </td>
+                <td> Fat   </td>
+            </tr>
+
+            @foreach (Userdata result in Model.AllData)
+            {
+                <tr>
+                    <td>@result.DateStamp</td>
+                    <td>@result.MinutesVeryActive   </td>
+                    <td>@result.ActivityCalories   </td>
+                    <td>@result.Floors    </td>
+                    <td>@result.TimeEnteredBed    </td>
+                    <td>@result.Weight     </td>
+                    <td>@result.BMI     </td>
+                    <td>@result.Fat    </td>
+
+                </tr>
+            }
+            </table> 
+
+        <h2>Correlations</h2>
+        <table>
+            <tr>
+                <td>Belong</td>
+                <td>Factor</td>
+                <td>Coefficient</td>
+            </tr>
+
+            @foreach (SleepMakeSense.Models.CorrList result in Model.CorrCoefficient)
+            {
+                <tr>
+                    <td>@result.Belong</td>
+                    <td>@result.Name</td>
+                    <td>@result.Coefficient</td>
+                </tr>
+            }
+        </table>
+
+</body>
+</html>

@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{15C54FE5-E2F1-46AE-8475-F3506BB5CC89}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SleepMakeSense</RootNamespace>
+    <AssemblyName>SleepMakeSense</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44302</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ceka">
+      <HintPath>..\packages\DM.Ceka.1.2.3\lib\net40\Ceka.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fitbit.Portable, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Fitbit.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Beans">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.Beans.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Remoting">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.Remoting.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.SwingAWT">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.SwingAWT.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Text">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.XML.API.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Bind">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.XML.Bind.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Parse">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.XML.Parse.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Transform">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.XML.Transform.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.WebServices">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.XML.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.XPath">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.OpenJDK.XML.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.7.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\ExcelPackage.1.0.0\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PicNetML">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\PicNetML.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=104.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="weka">
+      <HintPath>..\packages\PicNetML.0.0.16\lib\net45\weka.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DataMining.cs" />
+    <Compile Include="Controllers\DiaryDataController.cs" />
+    <Compile Include="Controllers\FitbitController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SyncController.cs" />
+    <Compile Include="Controllers\UserdatasController.cs" />
+    <Compile Include="DataAccessLayer\SleepbetaDbContext.cs" />
+    <Compile Include="FitBitPortable\Constants.cs" />
+    <Compile Include="FitBitPortable\EmptyDateToMinDateConverter.cs" />
+    <Compile Include="FitBitPortable\FitbitAppCredentials.cs" />
+    <Compile Include="FitBitPortable\FitbitClient.cs" />
+    <Compile Include="FitBitPortable\FitbitClientHelper.cs" />
+    <Compile Include="FitBitPortable\FitbitClientHelperExtensions.cs" />
+    <Compile Include="FitBitPortable\FitbitException.cs" />
+    <Compile Include="FitBitPortable\FitbitHttpMessageHandler.cs" />
+    <Compile Include="FitBitPortable\FitbitRateLimitException.cs" />
+    <Compile Include="FitBitPortable\FitbitRequestException.cs" />
+    <Compile Include="FitBitPortable\FitbitTokenException.cs" />
+    <Compile Include="FitBitPortable\HttpRequestMessageExtensionMethods.cs" />
+    <Compile Include="FitBitPortable\IFitbitClient.cs" />
+    <Compile Include="FitBitPortable\IFitbitInterceptor.cs" />
+    <Compile Include="FitBitPortable\ITokenStore.cs" />
+    <Compile Include="FitBitPortable\JsonDotNetSerializer.cs" />
+    <Compile Include="FitBitPortable\JsonDotNetSerializerExtensions.cs" />
+    <Compile Include="FitBitPortable\StringAttributeExtensions.cs" />
+    <Compile Include="FitBitPortable\StringValueAttribute.cs" />
+    <Compile Include="FitBitPortable\SubscriptionManager.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201711300915423_Migration1.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201711300915423_Migration1.Designer.cs">
+      <DependentUpon>201711300915423_Migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationDbContext\201712030912066_test.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201712030912066_test.Designer.cs">
+      <DependentUpon>201712030912066_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationDbContext\201712031008488_addingToUserData.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201712031008488_addingToUserData.Designer.cs">
+      <DependentUpon>201712031008488_addingToUserData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationDbContext\201712100831034_Added updates.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201712100831034_Added updates.Designer.cs">
+      <DependentUpon>201712100831034_Added updates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationDbContext\201712121916090_added pss.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201712121916090_added pss.Designer.cs">
+      <DependentUpon>201712121916090_added pss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationDbContext\201712150235235_ZiluAdjustment.cs" />
+    <Compile Include="Migrations\ApplicationDbContext\201712150235235_ZiluAdjustment.Designer.cs">
+      <DependentUpon>201712150235235_ZiluAdjustment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ApplicationDbContext\ConfigApplicationDbContext.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201711300935112_migration2.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201711300935112_migration2.Designer.cs">
+      <DependentUpon>201711300935112_migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712030733381_added-pss.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712030733381_added-pss.Designer.cs">
+      <DependentUpon>201712030733381_added-pss.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712030743313_added-percievedstresssetuptable.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712030743313_added-percievedstresssetuptable.Designer.cs">
+      <DependentUpon>201712030743313_added-percievedstresssetuptable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712030858245_addingstressallover.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712030858245_addingstressallover.Designer.cs">
+      <DependentUpon>201712030858245_addingstressallover.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712030910290_reverse.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712030910290_reverse.Designer.cs">
+      <DependentUpon>201712030910290_reverse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712031010044_addedUserdata.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712031010044_addedUserdata.Designer.cs">
+      <DependentUpon>201712031010044_addedUserdata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712100829236_added updates.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712100829236_added updates.Designer.cs">
+      <DependentUpon>201712100829236_added updates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712121917322_added Percieved stress to Userdata.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712121917322_added Percieved stress to Userdata.Designer.cs">
+      <DependentUpon>201712121917322_added Percieved stress to Userdata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\201712150237360_ZiluAdjustments.cs" />
+    <Compile Include="Migrations\SleepbetaDbContext\201712150237360_ZiluAdjustments.Designer.cs">
+      <DependentUpon>201712150237360_ZiluAdjustments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SleepbetaDbContext\ConfigSleepbetaDbContext.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUser.cs" />
+    <Compile Include="Models\DiaryData.cs" />
+    <Compile Include="Models\DiaryDataSetupModel.cs" />
+    <Compile Include="Models\DiaryDataViewClass.cs" />
+    <Compile Include="Models\FitbitData.cs" />
+    <Compile Include="Models\HomePageViewModel.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AspNetRole.cs" />
+    <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\CorrList.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\QuestionsSelections.cs" />
+    <Compile Include="Models\SyncViewModel.cs" />
+    <Compile Include="Models\TokenManagement.cs" />
+    <Compile Include="Models\Userdata.cs" />
+    <Compile Include="Models\UserQuestions.cs" />
+    <Compile Include="OAuth2\DefaultTokenManager.cs" />
+    <Compile Include="OAuth2\ITokenManager.cs" />
+    <Compile Include="OAuth2\OAuth2AccessToken.cs" />
+    <Compile Include="OAuth2\OAuth2AutoRefreshInterceptor.cs" />
+    <Compile Include="OAuth2\OAuth2Helper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CSSfiles\bootstrap-theme.css" />
+    <Content Include="CSSfiles\bootstrap-theme.min.css" />
+    <Content Include="CSSfiles\font-awesome.css" />
+    <Content Include="CSSfiles\Layout.css" />
+    <Content Include="CSSfiles\Layout.min.css" />
+    <Content Include="CSSfiles\Site.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="images\AppleHealthkit_logo.jpg" />
+    <Content Include="images\calm.jpg" />
+    <Content Include="images\Fitbit_logo.jpg" />
+    <Content Include="images\GoogleFit_logo.jpg" />
+    <Content Include="images\Jawbone_logo.jpg" />
+    <Content Include="images\MyfitnessPal_logo.png" />
+    <Content Include="images\photo-14.jpg" />
+    <Content Include="images\relax.jpg" />
+    <Content Include="images\relaxBig.jpg" />
+    <Content Include="images\relaxingOhm.jpg" />
+    <Content Include="images\SleepAsAndroid_logo.jpg" />
+    <Content Include="CSSfiles\bootstrap-theme.css.map" />
+    <Content Include="CSSfiles\bootstrap-theme.min.css.map" />
+    <Content Include="CSSfiles\bootstrap.css.map" />
+    <Content Include="CSSfiles\bootstrap.min.css.map" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="ClassDiagram2.cd" />
+    <Content Include="ClassDiagram3.cd" />
+    <Content Include="ClassDiagram4.cd" />
+    <Content Include="ClassDiagram5.cd" />
+    <None Include="Properties\PublishProfiles\DeepSleep - Web Deploy.pubxml" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Publish-WebApplicationWebsite.ps1" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Userdatas\Create.cshtml" />
+    <Content Include="Views\Userdatas\Delete.cshtml" />
+    <Content Include="Views\Userdatas\Details.cshtml" />
+    <Content Include="Views\Userdatas\Edit.cshtml" />
+    <Content Include="Views\Userdatas\Index.cshtml" />
+    <Content Include="Views\Fitbit\Devices.cshtml" />
+    <Content Include="Views\Fitbit\Tablero.cshtml" />
+    <Content Include="Views\Userdatas\Sync - old.cshtml" />
+    <Content Include="Views\Userdatas\FactorList.cshtml" />
+    <Content Include="Views\Fitbit\StepIntraday.cshtml" />
+    <Content Include="Views\Fitbit\SleepIntraday.cshtml" />
+    <Content Include="Views\Fitbit\Callback.cshtml" />
+    <Content Include="Views\DiaryData\EnterDiaryData.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\DiaryData\DiaryDataSetup.cshtml" />
+    <Content Include="Views\Userdatas\Sync.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201711300915423_Migration1.resx">
+      <DependentUpon>201711300915423_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201712030912066_test.resx">
+      <DependentUpon>201712030912066_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201712031008488_addingToUserData.resx">
+      <DependentUpon>201712031008488_addingToUserData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201712100831034_Added updates.resx">
+      <DependentUpon>201712100831034_Added updates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201712121916090_added pss.resx">
+      <DependentUpon>201712121916090_added pss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\ApplicationDbContext\201712150235235_ZiluAdjustment.resx">
+      <DependentUpon>201712150235235_ZiluAdjustment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201711300935112_migration2.resx">
+      <DependentUpon>201711300935112_migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712030733381_added-pss.resx">
+      <DependentUpon>201712030733381_added-pss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712030743313_added-percievedstresssetuptable.resx">
+      <DependentUpon>201712030743313_added-percievedstresssetuptable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712030858245_addingstressallover.resx">
+      <DependentUpon>201712030858245_addingstressallover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712030910290_reverse.resx">
+      <DependentUpon>201712030910290_reverse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712031010044_addedUserdata.resx">
+      <DependentUpon>201712031010044_addedUserdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712100829236_added updates.resx">
+      <DependentUpon>201712100829236_added updates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712121917322_added Percieved stress to Userdata.resx">
+      <DependentUpon>201712121917322_added Percieved stress to Userdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\SleepbetaDbContext\201712150237360_ZiluAdjustments.resx">
+      <DependentUpon>201712150237360_ZiluAdjustments.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56411</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44302/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+    <MonoDevelop>
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

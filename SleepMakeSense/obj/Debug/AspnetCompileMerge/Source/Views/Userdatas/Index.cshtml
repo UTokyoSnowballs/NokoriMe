@@ -1,0 +1,173 @@
+﻿@model IEnumerable<SleepMakeSense.Models.Userdata>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesAsleep)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesAwake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwakeningsCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeInBed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesToFallAsleep)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesAfterWakeup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SleepEfficiency)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CaloriesIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Water)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CaloriesOut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Steps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Distance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesSedentary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesLightlyActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesFairlyActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinutesVeryActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActivityCalories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Floors)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeEnteredBed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BMI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fat)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesAsleep)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesAwake)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwakeningsCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeInBed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesToFallAsleep)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesAfterWakeup)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SleepEfficiency)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaloriesIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Water)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaloriesOut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Steps)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Distance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesSedentary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesLightlyActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesFairlyActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinutesVeryActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActivityCalories)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Floors)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeEnteredBed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BMI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fat)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.UserdataId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.UserdataId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.UserdataId })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

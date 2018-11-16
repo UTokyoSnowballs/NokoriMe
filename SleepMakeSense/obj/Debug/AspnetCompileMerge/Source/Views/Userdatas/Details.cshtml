@@ -1,0 +1,210 @@
+﻿@model SleepMakeSense.Models.Userdata
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Userdata</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.DateStamp)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DateStamp)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesAsleep)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesAsleep)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesAwake)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesAwake)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AwakeningsCount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AwakeningsCount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TimeInBed)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TimeInBed)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesToFallAsleep)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesToFallAsleep)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesAfterWakeup)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesAfterWakeup)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.SleepEfficiency)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.SleepEfficiency)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CaloriesIn)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CaloriesIn)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Water)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Water)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CaloriesOut)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CaloriesOut)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Steps)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Steps)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Distance)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Distance)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesSedentary)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesSedentary)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesLightlyActive)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesLightlyActive)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesFairlyActive)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesFairlyActive)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MinutesVeryActive)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MinutesVeryActive)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ActivityCalories)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ActivityCalories)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Floors)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Floors)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TimeEnteredBed)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TimeEnteredBed)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Weight)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Weight)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.BMI)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BMI)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Fat)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Fat)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.UserdataId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

@@ -1,0 +1,325 @@
+﻿@using SleepMakeSense.Models
+
+@model DiaryDataViewClass
+
+
+<!DOCTYPE html>
+@using (Html.BeginForm("EnterDiaryData", "DiaryData", FormMethod.Post))
+{
+
+    <html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Factor List</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+    </head>
+
+
+    <body onload="UserdatasController.html()">
+        <div id="DataProcessing">
+            <script type="text/javascript">
+
+
+            </script>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Stress Diary</h2>
+                    <p>Please answer these questions to learn how various lifestyle factors are affecting your stress.</p>
+                    <hr />
+                </div>
+            </div>
+
+            <table class="table">
+
+               <!-- <tr style="@((bool)Model.UserQuestion.SchoolQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>School</span></td>
+                    <td class="diaryquestion"> How stressed were your from assignment/exams yesterday? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.SchoolStress, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>-->
+                
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.WakeUpFreshness ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Wake Up Freshness</span></td>
+                    <td class="diaryquestion"> How fresh did you feel waking up today? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.WakeUpFreshness, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.Dream? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-cloud fa-2x"></i><span>Dream</span></td>
+                    <td class="diaryquestion"> How well did your remember your dream last night? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.Dream, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--added Percieved stress scale questions-->
+                <!--Q1-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
+                    <td class="diaryquestion"> In the last month, how often have you been upset because of something that happened unexpectedly?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss1, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q2-->
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you felt that you were unable to control the important things in your life? </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss2, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q3-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you felt nervous and “stressed”?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss3, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q4-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you felt confident about your ability to handle your personal problems?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss4, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q5-->
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you felt that things were going your way?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss5, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q6-->
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you found that you could not cope with all the things that you had to do? </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss6, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q7-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you been able to control irritations in your life?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss7, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q8-->
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you felt that you were on top of things? </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss8, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q9-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion"> In the last month, how often have you been angered because of things that were outside of your control?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss9, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <!--Q10-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.PerceivedStress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-frown-o fa-2x"></i><span>Stress</span--></td>
+                    <td class="diaryquestion">In the last month, how often have you felt difficulties were piling up so high that you could not overcome them? </td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.pss10, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.Stress ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-frown-o fa-2x"></i><span>Stress</span></td>
+                    <td class="diaryquestion"> How anxious/stressed were you yesterday? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.Stress, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.Tiredness ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Tired</span></td>
+                    <td class="diaryquestion"> How tired/sleepy were you before going to bed last night? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.Tiredness, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.Mood ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-child fa-2x"></i><span>Mood</span></td>
+                    <td class="diaryquestion"> How was your mood before going to bed last night? (1 very bad - 5 very good)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.Mood, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr style="@((bool)Model.UserQuestion.SchoolQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-graduation-cap fa-2x"></i><span>School</span></td>
+                    <td class="diaryquestion"> How stressed were your from assignment/exams yesterday? (1 not at all - 5 very)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.SchoolStress, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.CoffeeQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-coffee fa-2x"></i><span>Caffeine</span></td>
+                    <td class="diaryquestion">How many coffees and/or energy drinks did you drink yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.CoffeeAmt, Model.QUESTIONSELECTION.ToTen(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.CoffeeQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-coffee fa-2x"></i><span>Caffeine</span--></td>
+                    <td class="diaryquestion">When was the last time you had Caffeine yesterday? (energy drink, coffee, etc.)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.CoffeeTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.AlcoholQuestions ? "display:" : "display:none")">
+                    <!--td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol Amount</span></td-->
+                    <td class="diaryfactor"><i class="fa fa-glass fa-2x"></i><span>Alcohol</span></td>
+                    <td class="diaryquestion">How many alcoholic drinks did you have yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.AlcoholAmt, Model.QUESTIONSELECTION.ToTen(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.AlcoholQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-glass fa-2x"></i><span>Alcohol Time</span--></td>
+                    <td class="diaryquestion">When was the last time you had an alcoholic drink yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.AlcoholTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.ExersiseQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span></td>
+                    <td class="diaryquestion">How intense did you work out on a scale of 1-5 yesterday (1 being easy workout, 5 being your body was in a lot of pain afterwards)</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.ExerciseIntensity, Model.QUESTIONSELECTION.ToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.ExersiseQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-futbol-o fa-2x"></i><span>Exercise</span--></td>
+                    <td class="diaryquestion">How long did you exercise yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.ExerciseDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.FoodQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Dinner</span></td>
+                    <td class="diaryquestion">What time did you have dinner last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.DinnerTime, Model.QUESTIONSELECTION.NightHours(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.FoodQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-cutlery fa-2x"></i><span>Snacking</span></td>
+                    <td class="diaryquestion">What time did you snack last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.SnackTime, Model.QUESTIONSELECTION.NightHours(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.NapQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-bed fa-2x"></i><span>Naps</span></td>
+                    <td class="diaryquestion">How long did you nap yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.NapDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.NapQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-bed fa-2x"></i><span>Naps</span--></td>
+                    <td class="diaryquestion">What Time was your nap yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.NapTime, Model.QUESTIONSELECTION.DayHours(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.WorkQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-briefcase fa-2x"></i><span>Work</span></td>
+                    <td class="diaryquestion">When did you finish work yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.WorkTime, Model.QUESTIONSELECTION.AllHours(), "Please Select", new { @class = "form-control" })
+
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.WorkQuestions ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-briefcase fa-2x"></i><span>Work</span--></td>
+                    <td class="diaryquestion">How many hours did you work for yesterday?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.WorkDuration, Model.QUESTIONSELECTION.TimeToTen(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <!--Added questions on how much time spent with family and friends before bed time-->
+                <tr class="tr-noborder" style="@((bool)Model.UserQuestion.SocialActivityDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Social activity</span></td>
+                    <td class="diaryquestion">How much time did you spend with your family after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.SocialFamily, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.SocialActivityDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><!--i class="fa fa-commenting fa-2x"></!--i><span>Social activity</span--></td>
+                    <td class="diaryquestion">How much time did you spend with your friends after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.SocialFriend, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.DigDeviceDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-mobile fa-2x"></i><span>Mobile use</span></td>
+                    <td class="diaryquestion">How many hours did you spend on your phone after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.DigDeviceDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.SocialMediaDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-commenting fa-2x"></i><span>Social media</span></td>
+                    <td class="diaryquestion">How long were you on social media for after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.SocialMedia, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.MusicDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-music fa-2x"></i><span>Music</span></td>
+                    <td class="diaryquestion">How long did you listen to music after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.MusicDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr  class="tr-noborder" style="@((bool)Model.UserQuestion.TVDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-tv fa-2x"></i><span>TV</span></td>
+                    <td class="diaryquestion">How long did you watch TV after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.MusicDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+                <tr style="@((bool)Model.UserQuestion.GameDurationQuestion ? "display:" : "display:none")">
+                    <td class="diaryfactor"><i class="fa fa-gamepad fa-2x"></i><span>Video games</span></td>
+                    <td class="diaryquestion">How long did you play video games for after 6pm last night?</td>
+                    <td>
+                        @Html.DropDownListFor(model => model.DiaryData.GamesDuration, Model.QUESTIONSELECTION.TimeToFive(), "Please Select", new { @class = "form-control" })
+                    </td>
+                </tr>
+
+                <tr class="tr-nobg">
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" value="Save Todays Diary" class="btn btn-primary btn-lg btn-block"  style="background-color:#94C3C7;color:#fff"/></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+}

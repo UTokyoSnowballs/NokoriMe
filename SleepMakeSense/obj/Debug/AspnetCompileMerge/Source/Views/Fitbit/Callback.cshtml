@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container">
+    <div class="row">
+        @if (ViewBag.AccessToken != null)
+        {
+
+            <p>FitBit Connected Successfully</p>
+
+        }
+        else
+        {
+            <p>The current session has not been authenticated with fitbit</p>
+        }
+        <p>
+        <p><a href="/Userdatas/Sync" class="btn btn-primary">Upload My Fitbit Data &raquo;</a></p>
+        <p><a href="/Userdatas/FactorQuestions" class="btn btn-primary">Testing Factor Questions &raquo;</a></p>
+        @Html.ActionLink("Refresh Token", "RefreshToken", "Fitbit")
+        </p>
+        <p>@Html.ActionLink("Test Token", actionName: "TestToken")</p>
+    </div>
+</div>

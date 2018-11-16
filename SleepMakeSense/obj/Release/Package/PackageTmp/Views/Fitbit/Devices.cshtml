@@ -1,0 +1,32 @@
+﻿@model SleepMakeSense.Models.Date
+@{
+    ViewBag.Title = "Devices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="jumbotron">
+    <h1>Fitbit</h1>
+    @*this is an old site - is not working since the Oathenicate upgrade*@
+    @if (ViewBag.FitbitConnected == false)
+    {
+        <p><a href="/Fitbit/Authorize" class="btn btn-primary">Connect My Fitbit &raquo;</a></p>
+    }
+    else
+    {
+        <p><a href="/Userdatas/Sync" class="btn btn-primary">Upload My Fitbit Data &raquo;</a></p>
+        @*
+                <p> Please input the date that you want to retrieve your sleep data on :) </p>
+                using (Html.BeginForm("SleepIntraDay", "Fitbit"))
+                {
+                    @Html.TextBoxFor(m => m.Year)
+                    @Html.TextBoxFor(m => m.Month)
+                    @Html.TextBoxFor(m => m.Day)
+
+            <input type="submit" value="Get Min-by-Min Sleep Data" &raquo />
+            }*@
+        @*<p><a href="/Fitbit/SleepIntraDay" class="btn btn-primary">Get Min-by-Min Sleep Data &raquo;</a></p>
+            <p><a href="/Fitbit/StepIntraDay" class="btn btn-primary">Get Min-by-Min Step Data &raquo;</a></p>*@
+    }
+</div>
+
